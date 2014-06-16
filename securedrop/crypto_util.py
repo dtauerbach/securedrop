@@ -53,12 +53,17 @@ del p
 
 gpg = gnupg.GPG(binary=GPG_BINARY, homedir=config.GPG_KEY_DIR)
 
+# TODO: we should ensure there are no blanks here
 words = file(config.WORD_LIST).read().split('\n')
 nouns = file(config.NOUNS).read().split('\n')
 adjectives = file(config.ADJECTIVES).read().split('\n')
+superheroes = file(config.SUPERHEROES).read().split('\n')
 
 
 class CryptoException(Exception):
+    pass
+
+class SourceException(Exception):
     pass
 
 
@@ -89,6 +94,11 @@ def genrandomid(words_in_random_id=DEFAULT_WORDS_IN_RANDOM_ID):
 def display_id():
     return ' '.join([random.choice(adjectives), random.choice(nouns)])
 
+def superhero_display_id():
+    return random.choice(superheroes)
+
+def superhero_with_adjective_display_id():
+    return ' '.join([random.choice(adjectives), random.choice(superheroes)])
 
 def hash_codename(codename, salt=SCRYPT_ID_PEPPER):
     """

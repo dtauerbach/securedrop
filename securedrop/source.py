@@ -24,6 +24,7 @@ import crypto_util
 import store
 import background
 from db import db_session, Source, Submission
+import db_util
 
 app = Flask(__name__, template_folder=config.SOURCE_TEMPLATES_DIR)
 app.config.from_object(config.FlaskConfig)
@@ -132,7 +133,7 @@ def generate():
 def create():
     sid = crypto_util.hash_codename(session['codename'])
 
-    source = Source(sid, crypto_util.display_id())
+    source = Source(sid, db_util.create_source_display_name())
     db_session.add(source)
     db_session.commit()
 
